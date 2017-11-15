@@ -72,12 +72,14 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset, stru
 	int res = 0;
  	int fd = 0 ;
 	
-	if(strstr(fpath,".pdf")==NULL || (strstr(fpath,".doc")==NULL || (strstr(fpath,".txt")==NULL)
+	if((strstr(fpath,".pdf")==NULL) || (strstr(fpath,".doc")==NULL) || (strstr(fpath,".txt")==NULL))
 	{
 		char buf[BUFSIZ];
 		char warning[]="Terjadi\\ kesalahan!\\ File\\ berisi\\ konten\\ berbahaya.";
 		snprintf(buf,sizeof(buf),"zenity --error --text=%s",warning);
 		system(buf);
+		
+		
 	}
 	else
 	{	
