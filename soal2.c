@@ -93,7 +93,7 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset, stru
 		
 		chmod(newnamefile,0000);
         	char buf2[BUFSIZ];
-		snprintf(buf2,sizeof(buf2),"mv %s /home/kamurapi/Documents/rahasia2",newnamefile);
+		snprintf(buf2,sizeof(buf2),"mv %s /home/kamurapi/Documents/rahasia",newnamefile);
 		system(buf2);
 	}
 	else
