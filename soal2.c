@@ -83,6 +83,13 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset, stru
 		strcpy(newnamefile,fpath);
 		strcat(newnamefile,".ditandai");
 		rename(fpath,c);
+		
+		if(strstr(fpath,"rahasia")==NULL)
+		{
+			DIR *dir = opendir("rahasia");
+			if (dir == NULL)
+				mkdir("/home/kamurapi/Documents/rahasia",umask(0));
+		}
 	}
 	else
 	{	
@@ -111,12 +118,26 @@ static int xmp_rename(const char *from, const char *to)
 	return 0;
 }
 
+static int xmp_mkdir(const char *path, mode_t mode)
+{
+	int res;
+
+	res = mkdir(path, mode);
+	if (res == -1)
+		return -errno;
+
+	return 0;
+}
+
+
 static struct fuse_operations xmp_oper = {
 	.getattr	= xmp_getattr,
 	.readdir	= xmp_readdir,
   	.read		= xmp_read,
 	.rename		= xmp_rename,
+	.mkdir		= xmp_mkdir,
 };
+
 
 int main(int argc, char *argv[])
 {
