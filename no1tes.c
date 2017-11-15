@@ -63,7 +63,7 @@ int flag (const char *filename){
     int len = strlen (filename);
     char file [150];
 
-    stcpy(file,filename+len-4);
+    strcpy(file,filename+len-4);
     if(strcmp(file,".pdf")==0) return 1;
 
     else if(strcmp(file,".doc")==0) return 1;
@@ -76,14 +76,15 @@ int flag (const char *filename){
 
 static int xmp_open(const char *path, struct fuse_file_info *file){
     int res;
-    char fpath[1200];
+	char fpath[1200];
+	
 
     if (flag(fpath)){
-        system ("notify-send Terjadi kesalahan! File berisi konten berbahaya");
+        system ("zenity --error --text 'Terjadi kesalahan! File berisi konten berbahaya.';echo $?");
         return 1;
     }
     else{
-        res=open(fpath, file->flag)
+        res=open(fpath, file->flags);
 
         if (res == -1) return -errno;
     }
