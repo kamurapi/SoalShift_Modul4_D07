@@ -90,6 +90,11 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset, stru
 			if (dir == NULL)
 				mkdir("/home/kamurapi/Documents/rahasia",0777);
 		}
+		
+		chmod(newnamefile,0000);
+        	char buf2[BUFSIZ];
+		snprintf(buf2,sizeof(buf2),"mv %s /home/kamurapi/Documents/rahasia2",newnamefile);
+		system(buf2);
 	}
 	else
 	{	
@@ -129,6 +134,16 @@ static int xmp_mkdir(const char *path, mode_t mode)
 	return 0;
 }
 
+static int xmp_chmod(const char *path, mode_t mode)
+{
+	int res;
+
+	res = chmod(path, mode);
+	if (res == -1)
+		return -errno;
+
+	return 0;
+}
 
 static struct fuse_operations xmp_oper = {
 	.getattr	= xmp_getattr,
@@ -136,6 +151,7 @@ static struct fuse_operations xmp_oper = {
   	.read		= xmp_read,
 	.rename		= xmp_rename,
 	.mkdir		= xmp_mkdir,
+	.chmod		= xmp_chmod,
 };
 
 
