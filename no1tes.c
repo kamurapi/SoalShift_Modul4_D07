@@ -7,6 +7,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <sys/time.h>
+#include <stdlib.h>
 
 static const char *dirpath = "/home/adis/Documents";
 
@@ -58,6 +59,38 @@ static int xmp_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
 	return 0;
 }
 
+int flag (const char *filename){
+    int len = strlen (filename);
+    char file [150];
+
+    stcpy(file,filename+len-4);
+    if(strcmp(file,".pdf")==0) return 1;
+
+    else if(strcmp(file,".doc")==0) return 1;
+
+
+    else if(strcmp(file,".txt")==0) return 1;
+
+    else return 0;
+}
+
+static int xmp_open(const char *path, struct fuse_file_info *file){
+    int res;
+    char fpath[1200];
+
+    if (flag(fpath)){
+        system ("notify-send Terjadi kesalahan! File berisi konten berbahaya");
+        return 1;
+    }
+    else{
+        res=open(fpath, file->flag)
+
+        if (res == -1) return -errno;
+    }
+    close (res);
+    return 0;
+}
+
 static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
 		    struct fuse_file_info *fi)
 {
@@ -87,7 +120,8 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
 static struct fuse_operations xmp_oper = {
 	.getattr	= xmp_getattr,
 	.readdir	= xmp_readdir,
-	.read		= xmp_read,
+    .read		= xmp_read,
+    .open       = xmp_open,
 };
 
 int main(int argc, char *argv[])
