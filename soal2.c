@@ -88,7 +88,7 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset, stru
 		{
 			DIR *dir = opendir("rahasia");
 			if (dir == NULL)
-				mkdir("/home/kamurapi/Documents/rahasia",umask(0));
+				mkdir("/home/kamurapi/Documents/rahasia",0777);
 		}
 	}
 	else
