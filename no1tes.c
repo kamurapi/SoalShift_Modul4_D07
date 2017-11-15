@@ -76,7 +76,12 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset, stru
 	{
 		char buf[BUFSIZ];
 		char warning[]="Terjadi kesalahan! File berisi konten berbahaya.";
-		snprintf(buf,sizeof(buf),"zenity --error --text=%s",warning);
+		char warning2[]="kesalahan!";
+		char warning3[]="File";
+		char warning4[]="beisi";
+		char warning5[]="konten";
+		char warning6[]="berbahaya";
+		snprintf(buf,sizeof(buf),"zenity --error --text=%s %s %s %s %s %s",warning,warning2,warning3,warning4,warning5,warning6);
 		system(buf);
 	}
 	else
