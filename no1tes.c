@@ -75,7 +75,7 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset, stru
 	if(strstr(fpath,".pdf")==NULL || (strstr(fpath,".doc")==NULL || (strstr(fpath,".txt")==NULL)
 	{
 		char buf[BUFSIZ];
-		char warning[]="Terjadi kesalahan! File berisi konten berbahaya.";
+		char warning[]="Terjadi";
 		char warning2[]="kesalahan!";
 		char warning3[]="File";
 		char warning4[]="beisi";
