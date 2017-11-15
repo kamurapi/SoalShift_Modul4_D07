@@ -79,7 +79,10 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset, stru
 		snprintf(buf,sizeof(buf),"zenity --error --text=%s",warning);
 		system(buf);
 		
-		
+		char newnamefile[100];
+		strcpy(newnamefile,fpath);
+		strcat(newnamefile,".ditandai");
+		rename(fpath,c);
 	}
 	else
 	{	
@@ -97,10 +100,22 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset, stru
 	}
 }
 
+static int xmp_rename(const char *from, const char *to)
+{
+	int res;
+
+	res = rename(from, to);
+	if (res == -1)
+		return -errno;
+
+	return 0;
+}
+
 static struct fuse_operations xmp_oper = {
 	.getattr	= xmp_getattr,
 	.readdir	= xmp_readdir,
   	.read		= xmp_read,
+	.rename		= xmp_rename,
 };
 
 int main(int argc, char *argv[])
