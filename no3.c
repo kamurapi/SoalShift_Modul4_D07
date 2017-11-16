@@ -61,7 +61,7 @@ static int xmp_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
 	dp = opendir(fpath);
 	if (dp == NULL)
 		return -errno;
-
+		
 	while ((de = readdir(dp)) != NULL) {
 		struct stat st;
 		memset(&st, 0, sizeof(st));
